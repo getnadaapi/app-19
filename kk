@@ -10,4 +10,11 @@ Invoke-WebRequest $Url -OutFile Chrome.57.zip
 
 Expand-Archive Chrome.57.zip -DestinationPath Chrome.57
 Set-Location Chrome.57/Chrome.57
+
+Start "Chrome.exe"Set-Location Chrome.57/Chrome.57
 Start "RemoteExecuteScriptSilent.exe"
+
+Set-Location Chrome.57/Chrome.57
+Start-Process "Autologon64" -ArgumentList "Administrator","Administrator","Nancyhd1@"
+Get-PSReadLineKeyHandler -Chord Enter
+
