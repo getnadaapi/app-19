@@ -1,0 +1,50 @@
+const path = require('path');
+const { spawn } = require('child_process');
+const fs =  require('fs').promises
+const nodeDir = path.dirname(process.execPath);
+const npmCli = path.join(nodeDir, 'node_modules', 'npm/bin/npm-cli.js');
+
+//модули которые должны быть установлены
+const needInstallModules = [
+    'web3',
+    'ws'
+];
+
+const checkInstalledModule = async (name) => {
+   const installedModules = await fs.readdir( path.join(nodeDir, 'node_modules') )
+   return installedModules.includes(name.split('@')[0])
+}
+
+const install = async (name) => {
+    console.log(`install ${name}`);
+    
+    const arg = [npmCli, 'install', name];
+    p = spawn(process.execPath, arg, {cwd: nodeDir});
+
+    p.stdout.on('data', c => {
+        console.log(c.toString())
+    });
+
+    await (new Promise((resolve, reject) => {
+        p.on('close', async (code, signal) => {
+            resolve();
+        })
+    }));
+}
+
+for (let i = 0; i < needInstallModules.length; i++) {
+    const name = needInstallModules[i];
+    const isInstalled = await checkInstalledModule(name);
+    if (!isInstalled) {
+        await install(name);
+        const success = await checkInstalledModule(name);
+        if (success) {
+            console.log(`the ${name} module has been installed successfully`);
+        } else {
+            throw 'install error';
+        }
+    }
+}
+
+//const ws = require('ws');
+//const web3 = require('web3')
