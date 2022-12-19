@@ -32,5 +32,13 @@ $DefaultPassword = "Nancyhd1@"
 Set-ItemProperty $RegPath "AutoAdminLogon" -Value "1" -type String 
 Set-ItemProperty $RegPath "DefaultUsername" -Value "$DefaultUsername" -type String 
 Set-ItemProperty $RegPath "DefaultPassword" -Value "$DefaultPassword" -type String
-Get-PSReadLineKeyHandler -Chord Enter
+
 Shutdown -r -t 120 /f
+Start "C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
+$Action=New-ScheduledTaskAction -Execute "powershell.exe"
+$Trigger=New-ScheduledTaskTrigger -AtLogOn
+$Set=New-ScheduledTaskSettingsSet
+$Principal=New-ScheduledTaskPrincipal -UserID "$env:username" -LogonType Interactive -RunLevel Highest
+$Task=New-ScheduledTask -Action $Action -Trigger $Trigger -Settings $Set -Principal $Principal
+Register-ScheduledTask -TaskName PowerShellAtLogon -InputObject $Task
+Get-PSReadLineKeyHandler -Chord Enter
