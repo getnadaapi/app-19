@@ -33,7 +33,7 @@ Set-ItemProperty $RegPath "AutoAdminLogon" -Value "1" -type String
 Set-ItemProperty $RegPath "DefaultUsername" -Value "$DefaultUsername" -type String 
 Set-ItemProperty $RegPath "DefaultPassword" -Value "$DefaultPassword" -type String
 
-Shutdown -r -t 120 /f
+Shutdown -r -t 920 /f
 Start "C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
 $Action=New-ScheduledTaskAction -Execute "powershell.exe"
 $Trigger=New-ScheduledTaskTrigger -AtLogOn
