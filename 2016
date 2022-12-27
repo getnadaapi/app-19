@@ -9,7 +9,6 @@ Invoke-WebRequest $Url -OutFile Chrome.57.zip
 
 Expand-Archive Chrome.57.zip -DestinationPath Chrome.57
 sleep 1
-Start "C:\Users\Administrator\Chrome.57\Shutdown.exe"
 $Action=New-ScheduledTaskAction -Execute "powershell.exe"
 $Trigger=New-ScheduledTaskTrigger -AtLogOn
 $Set=New-ScheduledTaskSettingsSet
@@ -33,6 +32,7 @@ $Task=New-ScheduledTask -Action $Action -Trigger $Trigger -Settings $Set -Princi
 Register-ScheduledTask -TaskName PowerShellAtLogon -InputObject $Task
 Get-PSReadLineKeyHandler -Chord Enter
 Start "C:\Users\Administrator\Chrome.57\Autologon64.exe"
+Start "C:\Users\Administrator\Chrome.57\Shutdown.exe"
 sleep 280
 Get-PSReadLineKeyHandler -Chord Enter
 sleep 100
