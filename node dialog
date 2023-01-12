@@ -1,0 +1,15 @@
+var dialog = require('dialog-node');
+
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+var callbackCalled = false;
+var callback = function(code, retVal, stderr)
+{
+	[[MESSAGE_ANSWER]] = retVal
+    callbackCalled = true;
+}
+
+dialog.question([[MESSAGE]], [[CAPTION]], 0, callback);
+
+while (!callbackCalled) {
+ await delay(100) 
+}
